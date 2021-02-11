@@ -15,7 +15,9 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+import stocks_endpoint.views as V
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('', V.test, name="test"),
 ]
