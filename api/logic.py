@@ -1,6 +1,6 @@
 import requests
 
-def create_loan(params):
+def stock(params):
     # fetching from this API takes some time.
     google_json = requests.get("https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=GOOG&apikey=X1AN6OR1Y3WI51E3").json()
     print()
@@ -8,13 +8,13 @@ def create_loan(params):
     print("\n")
     return google_json
 
-def delete_loan(params):
+def boo(params):
     print("boo")
     return {
         "result": 200,
         "boo": "boo"}
 
-def loan_submission_failure(params):
+def email(params):
 
     # pretend to send an email.
     print("Sending an email...")

@@ -43,13 +43,13 @@ def rules(request):
             except:
                 pass
             if(rule == "stock"):
-                result = logic.create_loan(params)   
+                result = logic.stock(params)   
                 
             elif rule == "print_string":
-                result = logic.delete_loan(params)
+                result = logic.boo(params)
                 
             elif rule == "email":
-                result = logic.loan_submission_failure(params)
+                result = logic.email(params)
 
         except:
             print("Wrong input")
