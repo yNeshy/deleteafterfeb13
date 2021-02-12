@@ -4,30 +4,22 @@ from django.http import HttpResponse, QueryDict, JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from api import logic
 
-
 @csrf_exempt 
+
+# First endpoint, will echo the POST body (as json)
 def endpoint(request):
-    if request.method == 'POST':  
+    if request.method == 'POST':
         try:
-            data=json.loads(request.body)
-            
+            data=json.loads(request.body) 
             request_type = data['type']
+            # not used.
             params = data['params']
-
-            if(request_type == "LOAN_CREATED"):
-                result = logic.create_loan(params)
-
-            elif request_type == "LOAN_DELETED":
-                result = logic.delete_loan(params)
-
-            elif request_type == "LOAN_SUBMISSION_FAILURE":
-                result = logic.loan_submission_failure(params)
-
-            else :
-                result = {
-                    "type": request_type,
-                    "status": 404
-                }
+            
+            print(data)
+            result = {
+                "type": request_type,
+                "status": 200
+            }
 
             return JsonResponse(result, safe=False)
         except : 
@@ -35,6 +27,35 @@ def endpoint(request):
     return HttpResponse('Wrong call')
         
 
+# Second endpoint, will do action according to the rules received
+@csrf_exempt
+def rules(request):
+    if request.method == 'POST':
+        result = {
+            "status": 404,
+        }
+        try:
+            data=json.loads(request.body)  
+            params = data['params']
+            rule = None
+            try:
+                rule = params['rule']
+            except:
+                pass
+            if(rule == "stock"):
+                result = logic.create_loan(params)   
+                
+            elif rule == "print_string":
+                result = logic.delete_loan(params)
+                
+            elif rule == "email":
+                result = logic.loan_submission_failure(params)
+
+        except:
+            print("Wrong input")
+
+    return JsonResponse(result, safe=False)
+        
 
 
 # DEBUG_JSON = {
